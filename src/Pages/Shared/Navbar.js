@@ -4,11 +4,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "./Loading";
-
+import {FaAlignJustify} from "react-icons/fa";
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
-  if(loading){
-    return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
   const logout = () => {
     signOut(auth);
@@ -30,9 +30,23 @@ const Navbar = () => {
       <li>
         <Link to="/about">About</Link>
       </li>
-      {user? <button className="btn-ghost px-1 rounded-md font-bold" onClick={logout}>Logout</button>: <li>
-        <Link to="/login">Login</Link>
-      </li>}
+      {user && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
+      {user ? (
+        <button
+          className="btn-ghost px-1 rounded-md font-bold"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -62,10 +76,21 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <button className="btn btn-ghost normal-case text-xl">My MERN Portal</button>
+        <button className="btn btn-ghost normal-case text-xl">
+          My MERN Portal
+        </button>
       </div>
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+      </div>
+      <div className="navbar-end">
+        <label
+          tabIndex={1}
+          htmlFor="dashboard-sidebar"
+          className="btn btn-ghost lg:hidden"
+        >
+          <FaAlignJustify className="text-xl"/>
+        </label>
       </div>
     </div>
   );
