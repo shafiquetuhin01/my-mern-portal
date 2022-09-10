@@ -14,10 +14,6 @@ const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-    const [sendEmailVerification] = useSendEmailVerification(auth);
-  const [sendPasswordResetEmail, sending, resetError] =
-    useSendPasswordResetEmail(auth);
-    const [email, setEmail] = useState('');
   const {
     register,
     formState: { errors },
@@ -119,12 +115,7 @@ const Login = () => {
                 )}
               </label>
             </div>
-            <p className="mt-[-15px] mb-5 cursor-pointer"
-            onClick={async () => {
-              await sendPasswordResetEmail(email);
-              alert('Sent email');
-            }}
-            >
+            <p className="mt-[-15px] mb-5 cursor-pointer">
               Forgot your password?{" "}
               <Link to="/signup" className="text-primary font-bold">
                 Register
