@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
@@ -7,7 +6,7 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        myMernTheme: {
+        doctortheme: {
           primary: "#0FCFEC",
           secondary: "#19D3AE",
           accent: "#3A4256",
