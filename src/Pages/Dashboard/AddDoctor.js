@@ -1,13 +1,15 @@
+import el from "date-fns/esm/locale/el/index.js";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import Loading from "../Shared/Loading";
 
 const AddDoctor = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit,
+    handleSubmit, reset
   } = useForm();
   const { data: services, isLoading } = useQuery("services", () =>
     fetch("http://localhost:5000/service").then((res) => res.json())
@@ -34,6 +36,24 @@ const AddDoctor = () => {
                 img: img,
                 specialicy: data.specialicy
             }
+            fetch('http://localhost:5000/doctor',{
+              method:'POST',
+              headers:{
+                'content-type':'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+              },
+              body:JSON.stringify(doctor)
+            })
+            .then(res=>res.json())
+            .then(inserted=>{
+              if(inserted.insertedId){
+                toast.success("Doctors added successfully");
+                reset();
+              }
+              else{
+                toast.error("Not successful")
+              }
+            })
         }
     })
   };
