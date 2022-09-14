@@ -1,4 +1,3 @@
-import el from "date-fns/esm/locale/el/index.js";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -34,7 +33,7 @@ const AddDoctor = () => {
                 name: data.name,
                 email: data.email,
                 img: img,
-                specialicy: data.specialicy
+                speciality: data.speciality
             }
             fetch('http://localhost:5000/doctor',{
               method:'POST',
