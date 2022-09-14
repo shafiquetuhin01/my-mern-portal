@@ -8,53 +8,53 @@ const AddDoctor = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit, reset
+    handleSubmit,
+    reset,
   } = useForm();
   const { data: services, isLoading } = useQuery("services", () =>
     fetch("http://localhost:5000/service").then((res) => res.json())
   );
 
-  const imageStorage_key = '0e61365a564cfccc68f54261bf9ebf1d';
+  const imageStorage_key = "0e61365a564cfccc68f54261bf9ebf1d";
 
   const onSubmit = async (data) => {
     const image = data.image[0];
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append("image", image);
     const url = `https://api.imgbb.com/1/upload?key=${imageStorage_key}`;
-    fetch(url,{
-        method:"POST",
-        body: formData
+    fetch(url, {
+      method: "POST",
+      body: formData,
     })
-    .then(res=>res.json())
-    .then(result=>{
-        if(result.success){
-            const img = result.data.url;
-            const doctor = {
-                name: data.name,
-                email: data.email,
-                img: img,
-                speciality: data.speciality
-            }
-            fetch('http://localhost:5000/doctor',{
-              method:'POST',
-              headers:{
-                'content-type':'application/json',
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-              },
-              body:JSON.stringify(doctor)
-            })
-            .then(res=>res.json())
-            .then(inserted=>{
-              if(inserted.insertedId){
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          const img = result.data.url;
+          const doctor = {
+            name: data.name,
+            email: data.email,
+            speciality: data.speciality,
+            img: img,
+          };
+          fetch("http://localhost:5000/doctor", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(doctor),
+          })
+            .then((res) => res.json())
+            .then((inserted) => {
+              if (inserted.insertedId) {
                 toast.success("Doctors added successfully");
                 reset();
+              } else {
+                toast.error("Not successful");
               }
-              else{
-                toast.error("Not successful")
-              }
-            })
+            });
         }
-    })
+      });
   };
   if (isLoading) {
     return <Loading />;
@@ -123,13 +123,15 @@ const AddDoctor = () => {
           <label className="label">
             <span className="label-text">Spaciality</span>
           </label>
-          <select {...register('speciality')} className="input-bordered select w-full max-w-xs">
-           {
-            services.map(service=><option
-            key={service._id}
-            value={service.name}
-            >{service.name}</option>)
-           }
+          <select
+            {...register("speciality")}
+            className="input-bordered select w-full max-w-xs"
+          >
+            {services.map((service) => (
+              <option key={service._id} value={service.name}>
+                {service.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="form-control w-full max-w-xs">
@@ -138,7 +140,7 @@ const AddDoctor = () => {
           </label>
           <input
             type="file"
-                       className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-xs"
             {...register("image", {
               required: {
                 value: true,
