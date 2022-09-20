@@ -35,9 +35,9 @@ const Navbar = () => {
                         {menuItems}
                     </ul>
                 </div>
-                <Link to="#" className="btn btn-ghost normal-case text-xl">My MERN Portal</Link>
+                <a className="btn btn-ghost normal-case text-xl">Doctors Portal</a>
             </div>
-            <div className="navbar-end hidden lg:flex">
+            <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
                     {menuItems}
                 </ul>

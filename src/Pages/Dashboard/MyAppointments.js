@@ -12,7 +12,7 @@ const MyAppointments = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`https://mighty-fjord-57507.herokuapp.com/booking?patient=${user.email}`, {
+            fetch(`http://localhost:5000/booking?patient=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -50,7 +50,7 @@ const MyAppointments = () => {
                     </thead>
                     <tbody>
                         {
-                            appointments.map((a, index) =><tr key={index}>
+                            appointments.map((a, index) => <tr>
                                 <th>{index + 1}</th>
                                 <td>{a.patientName}</td>
                                 <td>{a.date}</td>
