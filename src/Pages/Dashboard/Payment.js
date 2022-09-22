@@ -1,6 +1,6 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import Loading from '../Shared/Loading';
@@ -9,6 +9,8 @@ import CheckoutForm from './CheckoutForm';
 const Payment = () => {
     const {id} = useParams();
     const url = `http://localhost:5000/booking/${id}`;
+    const [stripePromise, setStripePromise] = useState(() => loadStripe('pk_test_51LkTaMJOGqI1fnpSNGZTcbhBO2o3wh6Kd9kPjyRXO277sRfG6aOC22z7ZPE4pM614458Ma2XyvtGK60yusmvxG4u00m01SgJYE'))
+
     const { data: appointment, isLoading } = useQuery(['booking', id], () => fetch(url, {
       method: 'GET',
       headers: {
@@ -19,7 +21,7 @@ const Payment = () => {
   if (isLoading) {
       return <Loading></Loading>
   };
-  const stripePromise = loadStripe('pk_test_51LkTaMJOGqI1fnpSNGZTcbhBO2o3wh6Kd9kPjyRXO277sRfG6aOC22z7ZPE4pM614458Ma2XyvtGK60yusmvxG4u00m01SgJYE');
+//   const stripePromise = loadStripe('pk_test_51LkTaMJOGqI1fnpSNGZTcbhBO2o3wh6Kd9kPjyRXO277sRfG6aOC22z7ZPE4pM614458Ma2XyvtGK60yusmvxG4u00m01SgJYE');
 
 
   return (
